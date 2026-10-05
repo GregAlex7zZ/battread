@@ -1,0 +1,37 @@
+.venv/
+.cache/
+.pre-commit-cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+build/
+dist/
+site/
+.DS_Store
+Thumbs.db
+# Experimental inputs and derived outputs are private by default. Only the
+# explicitly licensed, documented acceptance fixtures below may be committed.
+private/
+*.mpr
+*.mpt
+*.nda
+*.ndax
+*.csv
+*.txt
+*.tsv
+*.parquet
+*.ipynb
+*.zip
+*.tar.gz
+!/licenses/*.txt
+!/tests/data/biologic/CC-BY-4.0.txt
+!/tests/data/biologic/020-formation_CB5.mpr
+!/tests/data/biologic/020-formation_CB5.mpt
+!/tests/data/neware/prefix.nda
+!/tests/data/neware/small.ndax
+!/tests/data/neware/conflicting.ndax

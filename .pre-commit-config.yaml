@@ -1,0 +1,30 @@
+repos:
+  - repo: local
+    hooks:
+      - id: code-documentation
+        name: Check Python documentation presence
+        entry: python tools/check_code_docs.py
+        language: python
+        pass_filenames: false
+        files: ^(src|tests|benchmarks|tools)/.*\.py$
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        # Unchanged, attributed independent BT-Lab acceptance reference (681 kB).
+        exclude: ^tests/data/biologic/020-formation_CB5\.mpt$
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+        # Preserve upstream fixture/license bytes and the empty typing marker.
+        exclude: ^(LICENSE|licenses/.*|tests/data/.*|src/battread/py\.typed)$
+      - id: trailing-whitespace
+        # Scientific fixtures and upstream notices must remain byte-identical.
+        exclude: ^(LICENSE|licenses/.*|tests/data/.*)$
+        args: [--markdown-linebreak-ext=md]

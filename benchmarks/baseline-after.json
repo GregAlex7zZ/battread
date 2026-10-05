@@ -1,0 +1,883 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "dependencies": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "pyarrow": "25.0.1"
+    }
+  },
+  "measurements": [
+    {
+      "case": "read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2473883000202477,
+      "rows_per_second": 404222.8350807836,
+      "peak_rss_bytes": 128307200,
+      "pre_operation_peak_rss_bytes": 95797248,
+      "repetition": 0
+    },
+    {
+      "case": "read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.24171069997828454,
+      "rows_per_second": 413717.72126341145,
+      "peak_rss_bytes": 128434176,
+      "pre_operation_peak_rss_bytes": 95928320,
+      "repetition": 1
+    },
+    {
+      "case": "read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.24038009997457266,
+      "rows_per_second": 416007.8143347888,
+      "peak_rss_bytes": 128110592,
+      "pre_operation_peak_rss_bytes": 95903744,
+      "repetition": 2
+    },
+    {
+      "case": "normalization",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.0010704000014811754,
+      "rows_per_second": 93423019.30271311,
+      "peak_rss_bytes": 101064704,
+      "pre_operation_peak_rss_bytes": 101064704,
+      "repetition": 0
+    },
+    {
+      "case": "normalization",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.0011745999800041318,
+      "rows_per_second": 85135366.68002348,
+      "peak_rss_bytes": 100892672,
+      "pre_operation_peak_rss_bytes": 100892672,
+      "repetition": 1
+    },
+    {
+      "case": "normalization",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.0012035999679937959,
+      "rows_per_second": 83084083.29944012,
+      "peak_rss_bytes": 101695488,
+      "pre_operation_peak_rss_bytes": 101695488,
+      "repetition": 2
+    },
+    {
+      "case": "merge",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.010206499951891601,
+      "rows_per_second": 19595355.993014373,
+      "peak_rss_bytes": 111095808,
+      "pre_operation_peak_rss_bytes": 101437440,
+      "repetition": 0
+    },
+    {
+      "case": "merge",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.012016399996355176,
+      "rows_per_second": 16643919.981081203,
+      "peak_rss_bytes": 111947776,
+      "pre_operation_peak_rss_bytes": 101183488,
+      "repetition": 1
+    },
+    {
+      "case": "merge",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.010414800024591386,
+      "rows_per_second": 19203441.211330105,
+      "peak_rss_bytes": 111300608,
+      "pre_operation_peak_rss_bytes": 100995072,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_write",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.029616300016641617,
+      "rows_per_second": 3376519.0095930034,
+      "peak_rss_bytes": 114393088,
+      "pre_operation_peak_rss_bytes": 101703680,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_write",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.028193100006319582,
+      "rows_per_second": 3546967.1649298817,
+      "peak_rss_bytes": 113975296,
+      "pre_operation_peak_rss_bytes": 100782080,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_write",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.02777709998190403,
+      "rows_per_second": 3600087.8444887004,
+      "peak_rss_bytes": 114069504,
+      "pre_operation_peak_rss_bytes": 100913152,
+      "repetition": 2
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2226067999145016,
+      "rows_per_second": 449222.5755835303,
+      "peak_rss_bytes": 101785600,
+      "pre_operation_peak_rss_bytes": 96112640,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2246570000424981,
+      "rows_per_second": 445123.00965953927,
+      "peak_rss_bytes": 101720064,
+      "pre_operation_peak_rss_bytes": 95567872,
+      "repetition": 1
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.22199300001375377,
+      "rows_per_second": 450464.65426299215,
+      "peak_rss_bytes": 101470208,
+      "pre_operation_peak_rss_bytes": 95883264,
+      "repetition": 2
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2316090000094846,
+      "rows_per_second": 431762.15084864973,
+      "peak_rss_bytes": 101568512,
+      "pre_operation_peak_rss_bytes": 96067584,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.22077070001978427,
+      "rows_per_second": 452958.65796973306,
+      "peak_rss_bytes": 101576704,
+      "pre_operation_peak_rss_bytes": 95973376,
+      "repetition": 1
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.22500979993492365,
+      "rows_per_second": 444425.0873914006,
+      "peak_rss_bytes": 101437440,
+      "pre_operation_peak_rss_bytes": 95715328,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.03973789990413934,
+      "rows_per_second": 2516489.3021833645,
+      "peak_rss_bytes": 104054784,
+      "pre_operation_peak_rss_bytes": 95997952,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.036084000021219254,
+      "rows_per_second": 2771311.3829174936,
+      "peak_rss_bytes": 104230912,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.0322885001078248,
+      "rows_per_second": 3097077.8966523125,
+      "peak_rss_bytes": 103575552,
+      "pre_operation_peak_rss_bytes": 95756288,
+      "repetition": 2
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2706298000412062,
+      "rows_per_second": 369508.45762282633,
+      "peak_rss_bytes": 106299392,
+      "pre_operation_peak_rss_bytes": 95813632,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2728632999351248,
+      "rows_per_second": 366483.87681221956,
+      "peak_rss_bytes": 106373120,
+      "pre_operation_peak_rss_bytes": 95952896,
+      "repetition": 1
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.2642898999620229,
+      "rows_per_second": 378372.3858322603,
+      "peak_rss_bytes": 105811968,
+      "pre_operation_peak_rss_bytes": 95838208,
+      "repetition": 2
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.6131011000834405,
+      "rows_per_second": 163105.2366182191,
+      "peak_rss_bytes": 102764544,
+      "pre_operation_peak_rss_bytes": 96276480,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.6272783998865634,
+      "rows_per_second": 159418.848183014,
+      "peak_rss_bytes": 102559744,
+      "pre_operation_peak_rss_bytes": 95916032,
+      "repetition": 1
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.6424586999928579,
+      "rows_per_second": 155652.0286846636,
+      "peak_rss_bytes": 102494208,
+      "pre_operation_peak_rss_bytes": 95793152,
+      "repetition": 2
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.2500053000403568,
+      "rows_per_second": 399991.52011520404,
+      "peak_rss_bytes": 128425984,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.2436283000279218,
+      "rows_per_second": 410461.34619229037,
+      "peak_rss_bytes": 128389120,
+      "pre_operation_peak_rss_bytes": 95965184,
+      "repetition": 1
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.24265060003381222,
+      "rows_per_second": 412115.1976795667,
+      "peak_rss_bytes": 128192512,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 2
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.2408180000493303,
+      "rows_per_second": 415251.35155808757,
+      "peak_rss_bytes": 127246336,
+      "pre_operation_peak_rss_bytes": 95690752,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.24304829991888255,
+      "rows_per_second": 411440.8536631403,
+      "peak_rss_bytes": 128356352,
+      "pre_operation_peak_rss_bytes": 96178176,
+      "repetition": 1
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.23635489994194359,
+      "rows_per_second": 423092.56133282295,
+      "peak_rss_bytes": 127946752,
+      "pre_operation_peak_rss_bytes": 96014336,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.0183305999962613,
+      "rows_per_second": 5455358.800060879,
+      "peak_rss_bytes": 112222208,
+      "pre_operation_peak_rss_bytes": 95879168,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.017042499966919422,
+      "rows_per_second": 5867683.743236401,
+      "peak_rss_bytes": 112140288,
+      "pre_operation_peak_rss_bytes": 95879168,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.017469199956394732,
+      "rows_per_second": 5724360.603210924,
+      "peak_rss_bytes": 112291840,
+      "pre_operation_peak_rss_bytes": 95965184,
+      "repetition": 2
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.2662373000057414,
+      "rows_per_second": 375604.7706232128,
+      "peak_rss_bytes": 137031680,
+      "pre_operation_peak_rss_bytes": 95772672,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.26439829997252673,
+      "rows_per_second": 378217.2578658443,
+      "peak_rss_bytes": 135860224,
+      "pre_operation_peak_rss_bytes": 95907840,
+      "repetition": 1
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.2676733999978751,
+      "rows_per_second": 373589.6058435162,
+      "peak_rss_bytes": 136126464,
+      "pre_operation_peak_rss_bytes": 95817728,
+      "repetition": 2
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.6223043000791222,
+      "rows_per_second": 160693.08855375997,
+      "peak_rss_bytes": 136486912,
+      "pre_operation_peak_rss_bytes": 95834112,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.6237706000683829,
+      "rows_per_second": 160315.34668199683,
+      "peak_rss_bytes": 136237056,
+      "pre_operation_peak_rss_bytes": 95780864,
+      "repetition": 1
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.6188959999708459,
+      "rows_per_second": 161578.03573574667,
+      "peak_rss_bytes": 136552448,
+      "pre_operation_peak_rss_bytes": 96120832,
+      "repetition": 2
+    },
+    {
+      "case": "read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.2902606999268755,
+      "rows_per_second": 436631.5153693763,
+      "peak_rss_bytes": 198627328,
+      "pre_operation_peak_rss_bytes": 95752192,
+      "repetition": 0
+    },
+    {
+      "case": "read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.303794600069523,
+      "rows_per_second": 434066.47448944557,
+      "peak_rss_bytes": 199479296,
+      "pre_operation_peak_rss_bytes": 95678464,
+      "repetition": 1
+    },
+    {
+      "case": "read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.3021677000215277,
+      "rows_per_second": 434373.22137333825,
+      "peak_rss_bytes": 199745536,
+      "pre_operation_peak_rss_bytes": 95989760,
+      "repetition": 2
+    },
+    {
+      "case": "normalization",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.006160799995996058,
+      "rows_per_second": 162316582.36753443,
+      "peak_rss_bytes": 144687104,
+      "pre_operation_peak_rss_bytes": 144687104,
+      "repetition": 0
+    },
+    {
+      "case": "normalization",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.006631799973547459,
+      "rows_per_second": 150788625.10762423,
+      "peak_rss_bytes": 144953344,
+      "pre_operation_peak_rss_bytes": 144953344,
+      "repetition": 1
+    },
+    {
+      "case": "normalization",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.006374000106006861,
+      "rows_per_second": 156887352.26998186,
+      "peak_rss_bytes": 144629760,
+      "pre_operation_peak_rss_bytes": 144629760,
+      "repetition": 2
+    },
+    {
+      "case": "merge",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.06752590008545667,
+      "rows_per_second": 29618264.95417198,
+      "peak_rss_bytes": 244359168,
+      "pre_operation_peak_rss_bytes": 144707584,
+      "repetition": 0
+    },
+    {
+      "case": "merge",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.06611850007902831,
+      "rows_per_second": 30248720.064875863,
+      "peak_rss_bytes": 244183040,
+      "pre_operation_peak_rss_bytes": 144539648,
+      "repetition": 1
+    },
+    {
+      "case": "merge",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.06638249999377877,
+      "rows_per_second": 30128422.40330563,
+      "peak_rss_bytes": 244453376,
+      "pre_operation_peak_rss_bytes": 144809984,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_write",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.11069320002570748,
+      "rows_per_second": 9033978.598213432,
+      "peak_rss_bytes": 187891712,
+      "pre_operation_peak_rss_bytes": 144703488,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_write",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.11266790004447103,
+      "rows_per_second": 8875642.482067129,
+      "peak_rss_bytes": 188084224,
+      "pre_operation_peak_rss_bytes": 144871424,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_write",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.11194870003964752,
+      "rows_per_second": 8932662.904043032,
+      "peak_rss_bytes": 187928576,
+      "pre_operation_peak_rss_bytes": 144711680,
+      "repetition": 2
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.0265086999861524,
+      "rows_per_second": 493459.51488233596,
+      "peak_rss_bytes": 101376000,
+      "pre_operation_peak_rss_bytes": 96051200,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.163310300093144,
+      "rows_per_second": 462254.53646522353,
+      "peak_rss_bytes": 101855232,
+      "pre_operation_peak_rss_bytes": 96092160,
+      "repetition": 1
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.15013970003929,
+      "rows_per_second": 465086.05928336974,
+      "peak_rss_bytes": 102158336,
+      "pre_operation_peak_rss_bytes": 96104448,
+      "repetition": 2
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.2184366000583395,
+      "rows_per_second": 450767.89662310045,
+      "peak_rss_bytes": 101658624,
+      "pre_operation_peak_rss_bytes": 95862784,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.153831399977207,
+      "rows_per_second": 464288.89466955606,
+      "peak_rss_bytes": 101629952,
+      "pre_operation_peak_rss_bytes": 96055296,
+      "repetition": 1
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.1005836999975145,
+      "rows_per_second": 476058.1546934708,
+      "peak_rss_bytes": 101445632,
+      "pre_operation_peak_rss_bytes": 95989760,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.22461810009554029,
+      "rows_per_second": 4452000.972204175,
+      "peak_rss_bytes": 108789760,
+      "pre_operation_peak_rss_bytes": 95875072,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.20379679999314249,
+      "rows_per_second": 4906848.390326289,
+      "peak_rss_bytes": 108843008,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.2199966999469325,
+      "rows_per_second": 4545522.729391939,
+      "peak_rss_bytes": 109043712,
+      "pre_operation_peak_rss_bytes": 95727616,
+      "repetition": 2
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.439847599947825,
+      "rows_per_second": 409861.6651389966,
+      "peak_rss_bytes": 109690880,
+      "pre_operation_peak_rss_bytes": 95916032,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.4084154000738636,
+      "rows_per_second": 415210.7647083352,
+      "peak_rss_bytes": 109772800,
+      "pre_operation_peak_rss_bytes": 95834112,
+      "repetition": 1
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 2.504299199907109,
+      "rows_per_second": 399313.30890378135,
+      "peak_rss_bytes": 109649920,
+      "pre_operation_peak_rss_bytes": 95731712,
+      "repetition": 2
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 5.829450499964878,
+      "rows_per_second": 171542.75518867944,
+      "peak_rss_bytes": 102420480,
+      "pre_operation_peak_rss_bytes": 95694848,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 6.120504700113088,
+      "rows_per_second": 163385.21886626817,
+      "peak_rss_bytes": 103059456,
+      "pre_operation_peak_rss_bytes": 96120832,
+      "repetition": 1
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 6.06451419997029,
+      "rows_per_second": 164893.6694723048,
+      "peak_rss_bytes": 102584320,
+      "pre_operation_peak_rss_bytes": 95293440,
+      "repetition": 2
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.2441554000834003,
+      "rows_per_second": 445601.9400273424,
+      "peak_rss_bytes": 133890048,
+      "pre_operation_peak_rss_bytes": 95748096,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.2336294000269845,
+      "rows_per_second": 447701.843460656,
+      "peak_rss_bytes": 134180864,
+      "pre_operation_peak_rss_bytes": 96047104,
+      "repetition": 1
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.2110723999794573,
+      "rows_per_second": 452269.2246573612,
+      "peak_rss_bytes": 133156864,
+      "pre_operation_peak_rss_bytes": 95899648,
+      "repetition": 2
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.242304899962619,
+      "rows_per_second": 445969.6805803131,
+      "peak_rss_bytes": 132550656,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.3192293999018148,
+      "rows_per_second": 431177.7006803791,
+      "peak_rss_bytes": 133263360,
+      "pre_operation_peak_rss_bytes": 95584256,
+      "repetition": 1
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.353648000047542,
+      "rows_per_second": 424872.3683319684,
+      "peak_rss_bytes": 132214784,
+      "pre_operation_peak_rss_bytes": 95965184,
+      "repetition": 2
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 0.09620259993243963,
+      "rows_per_second": 10394729.463676365,
+      "peak_rss_bytes": 131149824,
+      "pre_operation_peak_rss_bytes": 96071680,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 0.07829279999714345,
+      "rows_per_second": 12772566.57108298,
+      "peak_rss_bytes": 130859008,
+      "pre_operation_peak_rss_bytes": 95703040,
+      "repetition": 1
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 0.07928720000199974,
+      "rows_per_second": 12612376.272270665,
+      "peak_rss_bytes": 131051520,
+      "pre_operation_peak_rss_bytes": 95956992,
+      "repetition": 2
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.406144499895163,
+      "rows_per_second": 415602.637349324,
+      "peak_rss_bytes": 146563072,
+      "pre_operation_peak_rss_bytes": 96169984,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.4304667999967933,
+      "rows_per_second": 411443.5959385742,
+      "peak_rss_bytes": 147238912,
+      "pre_operation_peak_rss_bytes": 96096256,
+      "repetition": 1
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 2.410796200041659,
+      "rows_per_second": 414800.72018643457,
+      "peak_rss_bytes": 147460096,
+      "pre_operation_peak_rss_bytes": 96083968,
+      "repetition": 2
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 6.137752300011925,
+      "rows_per_second": 162926.09266718975,
+      "peak_rss_bytes": 141148160,
+      "pre_operation_peak_rss_bytes": 95916032,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 6.136951299966313,
+      "rows_per_second": 162947.35791784583,
+      "peak_rss_bytes": 142282752,
+      "pre_operation_peak_rss_bytes": 96002048,
+      "repetition": 1
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 6.313442000071518,
+      "rows_per_second": 158392.20507429578,
+      "peak_rss_bytes": 141017088,
+      "pre_operation_peak_rss_bytes": 96002048,
+      "repetition": 2
+    },
+    {
+      "case": "recognition",
+      "rows": 10000,
+      "chunk_size": 10000,
+      "seconds": 1.183528900030069,
+      "rows_per_second": 8449.307828263372,
+      "peak_rss_bytes": 96419840,
+      "pre_operation_peak_rss_bytes": 96399360,
+      "repetition": 0
+    },
+    {
+      "case": "recognition",
+      "rows": 10000,
+      "chunk_size": 10000,
+      "seconds": 1.1998728000326082,
+      "rows_per_second": 8334.216760083433,
+      "peak_rss_bytes": 96198656,
+      "pre_operation_peak_rss_bytes": 96174080,
+      "repetition": 1
+    },
+    {
+      "case": "recognition",
+      "rows": 10000,
+      "chunk_size": 10000,
+      "seconds": 1.1951229000696912,
+      "rows_per_second": 8367.340295643962,
+      "peak_rss_bytes": 96395264,
+      "pre_operation_peak_rss_bytes": 96370688,
+      "repetition": 2
+    }
+  ]
+}

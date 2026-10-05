@@ -1,0 +1,303 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "dependencies": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "pyarrow": "25.0.1"
+    }
+  },
+  "measurements": [
+    {
+      "case": "read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.5102704999735579,
+      "rows_per_second": 195974.48805130215,
+      "peak_rss_bytes": 135815168,
+      "pre_operation_peak_rss_bytes": 95670272,
+      "repetition": 0
+    },
+    {
+      "case": "normalization",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.02371589990798384,
+      "rows_per_second": 4216580.453956777,
+      "peak_rss_bytes": 101662720,
+      "pre_operation_peak_rss_bytes": 101662720,
+      "repetition": 0
+    },
+    {
+      "case": "merge",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.093609300092794,
+      "rows_per_second": 2136539.8502257993,
+      "peak_rss_bytes": 111112192,
+      "pre_operation_peak_rss_bytes": 100786176,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_write",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.05282380001153797,
+      "rows_per_second": 1893086.0706378117,
+      "peak_rss_bytes": 114069504,
+      "pre_operation_peak_rss_bytes": 100986880,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.4499779000179842,
+      "rows_per_second": 222233.13632959154,
+      "peak_rss_bytes": 101949440,
+      "pre_operation_peak_rss_bytes": 95776768,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.44206179992761463,
+      "rows_per_second": 226212.71509181405,
+      "peak_rss_bytes": 101736448,
+      "pre_operation_peak_rss_bytes": 95731712,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.16360059997532517,
+      "rows_per_second": 611244.7021287353,
+      "peak_rss_bytes": 104103936,
+      "pre_operation_peak_rss_bytes": 95678464,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.5143699999898672,
+      "rows_per_second": 194412.5823861616,
+      "peak_rss_bytes": 108421120,
+      "pre_operation_peak_rss_bytes": 95965184,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 10000,
+      "seconds": 0.8358540000626817,
+      "rows_per_second": 119638.11860983004,
+      "peak_rss_bytes": 103182336,
+      "pre_operation_peak_rss_bytes": 95887360,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.4658116000937298,
+      "rows_per_second": 214679.06763137324,
+      "peak_rss_bytes": 135307264,
+      "pre_operation_peak_rss_bytes": 95854592,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.4487173999659717,
+      "rows_per_second": 222857.41539682538,
+      "peak_rss_bytes": 134852608,
+      "pre_operation_peak_rss_bytes": 95625216,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.13720960007049143,
+      "rows_per_second": 728811.9777961965,
+      "peak_rss_bytes": 112119808,
+      "pre_operation_peak_rss_bytes": 95531008,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.49507149995770305,
+      "rows_per_second": 201991.02555599262,
+      "peak_rss_bytes": 140218368,
+      "pre_operation_peak_rss_bytes": 96104448,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 100000,
+      "chunk_size": 100000,
+      "seconds": 0.8632154000224546,
+      "rows_per_second": 115845.94065096468,
+      "peak_rss_bytes": 146673664,
+      "pre_operation_peak_rss_bytes": 95592448,
+      "repetition": 0
+    },
+    {
+      "case": "read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 4.84230589994695,
+      "rows_per_second": 206513.18207942118,
+      "peak_rss_bytes": 216387584,
+      "pre_operation_peak_rss_bytes": 96030720,
+      "repetition": 0
+    },
+    {
+      "case": "normalization",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.2329979999922216,
+      "rows_per_second": 4291882.333897218,
+      "peak_rss_bytes": 144670720,
+      "pre_operation_peak_rss_bytes": 144670720,
+      "repetition": 0
+    },
+    {
+      "case": "merge",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.8962022999767214,
+      "rows_per_second": 2231638.9949590056,
+      "peak_rss_bytes": 244547584,
+      "pre_operation_peak_rss_bytes": 144912384,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_write",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 0.31530020001810044,
+      "rows_per_second": 3171580.6077591865,
+      "peak_rss_bytes": 188067840,
+      "pre_operation_peak_rss_bytes": 144920576,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 4.338412199984305,
+      "rows_per_second": 230499.07521549423,
+      "peak_rss_bytes": 102141952,
+      "pre_operation_peak_rss_bytes": 95813632,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 4.161188900005072,
+      "rows_per_second": 240315.93470769402,
+      "peak_rss_bytes": 102219776,
+      "pre_operation_peak_rss_bytes": 95993856,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 1.5113446000032127,
+      "rows_per_second": 661662.4692991091,
+      "peak_rss_bytes": 109330432,
+      "pre_operation_peak_rss_bytes": 95768576,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 4.720731099951081,
+      "rows_per_second": 211831.59532436886,
+      "peak_rss_bytes": 108859392,
+      "pre_operation_peak_rss_bytes": 96227328,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 10000,
+      "seconds": 8.149394600070082,
+      "rows_per_second": 122708.50156052088,
+      "peak_rss_bytes": 103174144,
+      "pre_operation_peak_rss_bytes": 95719424,
+      "repetition": 0
+    },
+    {
+      "case": "iter_read",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 4.466587299946696,
+      "rows_per_second": 223884.57514575703,
+      "peak_rss_bytes": 139644928,
+      "pre_operation_peak_rss_bytes": 95543296,
+      "repetition": 0
+    },
+    {
+      "case": "canonical_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 4.3266248999862,
+      "rows_per_second": 231127.038538328,
+      "peak_rss_bytes": 140390400,
+      "pre_operation_peak_rss_bytes": 95793152,
+      "repetition": 0
+    },
+    {
+      "case": "parquet_iter",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 1.301162900053896,
+      "rows_per_second": 768543.2776776671,
+      "peak_rss_bytes": 131014656,
+      "pre_operation_peak_rss_bytes": 96149504,
+      "repetition": 0
+    },
+    {
+      "case": "convert",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 4.655786699964665,
+      "rows_per_second": 214786.47207089394,
+      "peak_rss_bytes": 153759744,
+      "pre_operation_peak_rss_bytes": 96129024,
+      "repetition": 0
+    },
+    {
+      "case": "reconstruction",
+      "rows": 1000000,
+      "chunk_size": 100000,
+      "seconds": 8.565397799946368,
+      "rows_per_second": 116748.80996259877,
+      "peak_rss_bytes": 150937600,
+      "pre_operation_peak_rss_bytes": 95694848,
+      "repetition": 0
+    },
+    {
+      "case": "recognition",
+      "rows": 10000,
+      "chunk_size": 10000,
+      "seconds": 1.1589433000190184,
+      "rows_per_second": 8628.54981761049,
+      "peak_rss_bytes": 96010240,
+      "pre_operation_peak_rss_bytes": 95985664,
+      "repetition": 0
+    }
+  ]
+}

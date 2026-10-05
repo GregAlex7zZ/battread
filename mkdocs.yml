@@ -1,0 +1,55 @@
+site_name: battread
+site_description: Vendor-independent standardization of electrochemical cycling data.
+docs_dir: docs
+site_dir: site
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+nav:
+  - Home: index.md
+  - User guide:
+      - Overview: user-guide/index.md
+      - Canonical data: user-guide/canonical-data.md
+      - Column recognition: recognition.md
+      - Reading delimited data: user-guide/reading-delimited.md
+      - Writing and conversion: user-guide/writing-and-conversion.md
+      - Current reconstruction: user-guide/current-reconstruction.md
+  - Readers:
+      - Overview: readers/index.md
+      - Bio-Logic: readers/biologic.md
+      - Neware: readers/neware.md
+  - API: api/index.md
+  - Developer guide:
+      - Overview: developer-guide/index.md
+      - Understanding the code: developer-guide/code-guide.md
+      - Dependency policy: developer-guide/dependencies.md
+      - Benchmarks: developer-guide/benchmarks.md
+      - Publication preparation: developer-guide/publication.md
+  - Specifications:
+      - Technical specification: specification/TECHNICAL_SPECIFICATION.md
+      - Column recognition: specification/COLUMN_RECOGNITION.md
+      - Initial registry: specification/INITIAL_RECOGNITION_REGISTRY.md
+      - Architecture and API: architecture/ARCHITECTURE_AND_API.md
+      - Testing and acceptance: testing/TESTING_AND_ACCEPTANCE.md
+      - v0.1 acceptance report: testing/V0_1_ACCEPTANCE_REPORT.md
+      - Python compatibility: testing/PYTHON_COMPATIBILITY.md
+      - Implementation handoff: implementation/AGENT_HANDOFF.md
+  - Decisions:
+      - v0.1 contract clarifications: adr/0001-v0.1-contract-clarifications.md
+      - Bio-Logic boundaries: adr/0002-biologic-adapter-and-capacity-boundaries.md
+      - Bio-Logic dq preference: adr/0003-biologic-dq-preference.md
+      - Neware strict records: adr/0004-neware-strict-records.md
+      - Typed pandas boundary: adr/0005-typed-pandas-boundary.md

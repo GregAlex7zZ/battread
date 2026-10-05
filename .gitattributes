@@ -1,0 +1,3 @@
+# Preserve exact source/manifest, independently licensed fixture and notice bytes.
+# Editors and formatters control source style; Git must not rewrite file contents.
+* -text
