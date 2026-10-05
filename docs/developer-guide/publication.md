@@ -34,7 +34,7 @@ python -m pip install -e ".[dev,docs,all]"
 python -m pytest
 python -m ruff check .
 python -m ruff format --check .
-python -m pyright --pythonpath python
+python -m pyright --pythonpath "$(python -c 'import sys; print(sys.executable)')"
 python tools/check_code_docs.py
 python -m mkdocs build --strict
 python -m build

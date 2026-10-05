@@ -12,7 +12,7 @@ Run the foundation checks with:
 ```bash
 ruff check .
 ruff format --check .
-pyright --pythonpath python
+python -m pyright --pythonpath "$(python -c 'import sys; print(sys.executable)')"
 pytest
 mkdocs build --strict
 python -m build

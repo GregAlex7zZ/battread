@@ -49,7 +49,7 @@ python -m pytest -q
 python -m pip install "dist/battread-0.1.0-py3-none-any.whl[all]"
 python -m pip check
 python -m pytest -q
-python -m pyright --pythonpath python
+python -m pyright --pythonpath "$(python -c 'import sys; print(sys.executable)')"
 ```
 
 For the minimum environment, include `numpy==1.26.4`, `pandas==2.2.3` and

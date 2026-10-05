@@ -196,7 +196,7 @@ python -m pip install -e ".[dev,docs,all]"
 pytest
 ruff check .
 ruff format --check .
-pyright --pythonpath python
+python -m pyright --pythonpath "$(python -c 'import sys; print(sys.executable)')"
 mkdocs build --strict
 python -m build
 ```
