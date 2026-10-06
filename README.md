@@ -97,8 +97,9 @@ multi-file streaming merge. See the [API](docs/api/index.md),
 ## Development and license
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [CHANGELOG.md](CHANGELOG.md).
-Source code is GPL-3.0-or-later: [LICENSE](LICENSE), [copyright](COPYRIGHT.md),
-[authors](AUTHORS.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
+Copyright (C) 2026 Alessandro Gregucci, for original battread contributions.
+Source code is GPL-3.0-or-later: [LICENSE](LICENSE), [authors](AUTHORS.md),
+and [third-party notices](THIRD_PARTY_NOTICES.md).
 Public fixtures retain their own licenses.
 
 Provided as is, without warranty, subject to the exclusions and liability limits

@@ -12,7 +12,7 @@ maintainers = [{name = "Alessandro Gregucci"}]
 readme = "README.md"
 requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
-license-files = ["LICENSE", "COPYRIGHT.md", "licenses/*.txt"]
+license-files = ["LICENSE", "licenses/*.txt"]
 
 keywords = [
     "electrochemistry",
@@ -84,8 +84,8 @@ include = [
     "/src/**/*.py", "/src/**/py.typed", "/tests/**/*.py", "/docs/**/*.md",
     "/tools/check_code_docs.py", "/benchmarks/*.py", "/benchmarks/*.md",
     "/benchmarks/*.json", "/examples/getting_started.ipynb", "/licenses/*.txt",
-    "/README.md", "/LICENSE", "/COPYRIGHT.md", "/AUTHORS.md",
-    "/CONTRIBUTING.md", "/CHANGELOG.md", "/CODE_OF_CONDUCT.md", "/SECURITY.md",
+    "/README.md", "/LICENSE", "/AUTHORS.md",
+    "/CONTRIBUTING.md", "/CHANGELOG.md",
     "/THIRD_PARTY_NOTICES.md", "/TODO.md", "/pyproject.toml", "/mkdocs.yml",
     "/.gitignore", "/.gitattributes", "/.editorconfig", "/.pre-commit-config.yaml",
     "/.github/workflows/*.yml",
