@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Replace full-memory MPR ingestion with bounded metadata/record reads, while
+  retaining Galvani's optional schema definitions and the public scientific API.
+- Support metadata-only MPR inspection and deterministic iterator cleanup;
+  validate container framing/counts and detect source mutation.
+- Add layout/corruption/equivalence regressions and synthetic before/after memory
+  evidence. Unsupported field IDs remain conservative explicit failures.
+
 ## 0.1.0 — prepared, not yet published
 
 - Current Neware workflow focuses on CSV autoexports; binary adapters are

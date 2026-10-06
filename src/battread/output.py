@@ -343,8 +343,8 @@ def convert(
     Use for file-to-file conversion. Reader state spans all chunks, preserving
     time normalization and capacity reconstruction across boundaries. The final
     destination is published only after successful exhaustion of the input.
-    Streaming readers bound tabular buffers; MPR still loads its backend data,
-    and Neware binary checkpoint metadata can grow with file length.
+    Streaming readers, including MPR, bound source/tabular buffers;
+    Neware binary checkpoint metadata can grow with file length.
 
     Args:
         source: Input path accepted by read().

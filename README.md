@@ -117,7 +117,7 @@ reads all its own outputs and validates their existing zero origin.
 | Generic CSV/TXT, including canonical text | Native delimited reader | Yes |
 | Canonical Parquet | PyArrow batches | Yes; decoder buffers also contribute to RAM |
 | Bio-Logic MPT | Native text adapter | Yes |
-| Bio-Logic MPR | Galvani 0.5.x | Full backend load; canonical chunks afterward |
+| Bio-Logic MPR | Galvani 0.5.x schemas | Bounded binary reads and canonical chunks |
 | Neware NDA | Strict NewareNDA record adapter | Yes, supported layouts |
 | Neware NDAX | Strict full/split NDC adapter | Yes; split timestamp metadata is retained |
 

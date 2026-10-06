@@ -47,9 +47,11 @@ nav:
       - v0.1 acceptance report: testing/V0_1_ACCEPTANCE_REPORT.md
       - Python compatibility: testing/PYTHON_COMPATIBILITY.md
       - Implementation handoff: implementation/AGENT_HANDOFF.md
+      - MPR memory priority: implementation/MPR_STREAMING_PRIORITY.md
   - Decisions:
       - v0.1 contract clarifications: adr/0001-v0.1-contract-clarifications.md
       - Bio-Logic boundaries: adr/0002-biologic-adapter-and-capacity-boundaries.md
       - Bio-Logic dq preference: adr/0003-biologic-dq-preference.md
       - Neware strict records: adr/0004-neware-strict-records.md
       - Typed pandas boundary: adr/0005-typed-pandas-boundary.md
+      - Bounded MPR ingestion: adr/0006-memory-bounded-mpr-ingestion.md

@@ -1,10 +1,23 @@
 ﻿# Checklist for future releases
 
-Updated on 2026-10-05. This list tracks future work; checks required before the
+Updated on 2026-10-06. This list tracks future work; checks required before the
 first publication remain in `RELEASE_STATUS.md`. When completing an item,
 record the release version, added tests and verified result.
 
-## Priority: Neware data
+## Sole implementation priority
+
+- [x] **Implement memory-bounded Bio-Logic MPR ingestion.** Implemented for
+  supported layouts with bounded metadata and binary record reads. Follow
+  [the dedicated priority handoff](docs/implementation/MPR_STREAMING_PRIORITY.md).
+  Scientific comparisons, corruption/closure regressions and fresh-process
+  synthetic memory measurements are recorded. Other work remains deferred until
+  the maintainer chooses the next priority.
+- [ ] **Verify unsupported MPR field ID 215 independently.** Galvani 0.5 lacks
+  this definition. Preserve explicit failure until a reference layout/export
+  establishes its width; do not guess. This is a compatibility follow-up, not an
+  unresolved full-memory allocation.
+
+## Deferred: Neware data
 
 The current Neware workflow uses **CSV autoexports**. The `.nda`/`.ndax`
 adapters remain available as experimental features: some layouts have only
@@ -36,10 +49,6 @@ current workflow.
   measurements across sizes and chunks, including NaN, duplicate times and
   reconstruction. Completion: scientifically equivalent streaming and memory
   explained in terms of chunks, metadata and buffers, without invented targets.
-- [ ] **Evaluate a memory-bounded MPR reader.** Profile Galvani and investigate
-  alternatives before replacement. Completion: independent export comparisons,
-  equivalent values/warnings/errors and measured RAM. Currently iter_read does
-  not prevent the MPR backend from loading the entire source.
 - [ ] **Evaluate PyArrow CSV as a fast path.** The current probe measures parsing
   alone. Before integration, demonstrate equivalent dialects, clock handling,
   units, malformed cells, duplicate labels, warnings and errors, plus a measured

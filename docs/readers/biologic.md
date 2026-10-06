@@ -21,7 +21,8 @@ pip install "battread[biologic]"
 ```
 
 The tested backend is Galvani 0.5.0 (`>=0.5.0,<0.6`), licensed GPL-3.0-or-later.
-Its import and objects remain inside the adapter. Generic reads and canonical
+Its schema functions and import remain inside the adapter. The full-memory
+MPRfile constructor is not used. Generic reads and canonical
 output consumption do not require Galvani. MPT uses battread's native text
 path and works without the optional extra.
 
@@ -74,13 +75,25 @@ overrides through the ordinary API.
 | Source | Source streaming | Chunk behavior |
 |---|---|---|
 | MPT | Yes | Reads records incrementally, preserving reconstruction state |
-| MPR | No | Galvani loads the complete binary acquisition; battread then standardizes batches |
+| MPR | Yes | Bounded binary batches feed the existing scientific conversion pipeline |
 
-MPR inspection also requires loading the backend table. Chunking MPR output
-does not bound source memory use. Unsupported Galvani column IDs raise
+MPR inspection reads small metadata prefixes and seeks over the measurement
+payload. The supported data versions are 0 (legacy and paired-ID encodings), 2
+and 3, with either Galvani module header format. Binary batch buffers are capped
+at 8 MiB; wide source schemas can yield smaller chunks than requested to limit
+string-row buffers. `read()` still collects the complete canonical result in RAM;
+use `iter_read()` or `convert()` for large acquisitions.
+
+Iterators release the source on exhaustion, error or explicit `close()`. Sources
+must remain unchanged during processing; detected replacement/truncation/mutation
+raises an error. The buffer ceiling is not a strict total-process RAM limit.
+Unsupported Galvani column IDs (including unverified ID 215) raise
 `UnsupportedFormatError`; corrupted or truncated acquisitions raise
 `CorruptedFileError`. No binary format coverage beyond the tested Galvani
 schemas is promised. Capacity resets are never repaired or unwrapped.
+
+See [ADR 0006](../adr/0006-memory-bounded-mpr-ingestion.md) and the
+[synthetic memory comparison](../developer-guide/benchmarks.md).
 
 Acceptance tests use an unchanged, attributed MPR/MPT pair and an independent
 BT-Lab ASCII reference. See [fixture provenance](https://github.com/echemdata/galvani/tree/d4a5f444b16eae57d2edfad6df774ead95c92fd6/tests/testdata).

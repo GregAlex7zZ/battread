@@ -9,21 +9,18 @@
 import csv
 import math
 import re
-from collections.abc import Iterator
+from collections.abc import Generator, Iterator
 from dataclasses import replace
 from importlib import import_module
 from pathlib import Path
-from typing import BinaryIO, Protocol, cast
+from typing import cast
 
-import numpy as np
 import pandas as pd
-from numpy.typing import NDArray
 
 from battread.exceptions import (
     CorruptedFileError,
     IncompatibleDataError,
     MissingDependencyError,
-    UnsupportedFormatError,
 )
 from battread.readers.delimited import (
     DelimitedReader,
@@ -34,67 +31,27 @@ from battread.readers.delimited import (
     _TablePlan,
 )
 from battread.readers.models import FormatInfo, ReaderCapabilities, ReadOptions
+from battread.readers.mpr import MPR_MAGIC, GalvaniSchema, MPRLayout, inspect_layout
 from battread.recognition import recognize_columns
 from battread.recognition.models import ColumnMatch, InspectionResult, ReaderHint
 
-_MPR_MAGIC = b"BIO-LOGIC MODULAR FILE\x1a".ljust(48) + b"\x00" * 4
+_MPR_MAGIC = MPR_MAGIC
 _MPT_MAGIC = (b"EC-Lab ASCII FILE", b"BT-Lab ASCII FILE")
 
 
-class _ParsedMPR(Protocol):
-    """Describe only the structured array used from a Galvani result.
+def _load_mpr(path: Path) -> MPRLayout:
+    """Resolve the optional schema backend and inspect bounded binary metadata.
 
-    Keeping this protocol local prevents backend-specific objects from
-    becoming part of the public pandas interface.
-    """
-
-    data: NDArray[np.void]
-
-
-class _Galvani(Protocol):
-    """Type the optional binary parser boundary without importing it eagerly."""
-
-    def MPRfile(self, source: BinaryIO) -> _ParsedMPR:
-        """Parse an opened binary stream and expose its structured measurement array.
-
-        The adapter translates backend failures and standardizes values separately.
-        """
-        ...
-
-
-def _load_mpr(path: Path) -> NDArray[np.void]:
-    """Load Galvani lazily and translate binary parser failures into package errors.
-
-    Return its structured measurement array for an existing MPR path. This
-    loads the full acquisition even when downstream canonical chunks are small.
-    MissingDependencyError includes the biologic installation extra.
+    No complete acquisition is allocated. MissingDependencyError still identifies
+    the biologic extra; scientific interpretation remains in the shared pipeline.
     """
     try:
-        backend = cast(_Galvani, import_module("galvani.BioLogic"))
+        backend = cast(GalvaniSchema, import_module("galvani.BioLogic"))
     except ImportError as error:
         raise MissingDependencyError(
             'Bio-Logic MPR support requires pip install "battread[biologic]".'
         ) from error
-    try:
-        with path.open("rb") as stream:
-            parsed = backend.MPRfile(stream)
-        data = parsed.data
-        if data.dtype.names is None:
-            raise ValueError("Backend returned no structured scientific table")
-        return data
-    except NotImplementedError as error:
-        raise UnsupportedFormatError(
-            f"Galvani cannot interpret this MPR field schema: {error}."
-        ) from error
-    except (
-        OSError,
-        ValueError,
-        TypeError,
-        KeyError,
-        IndexError,
-        AssertionError,
-    ) as error:
-        raise CorruptedFileError(f"Unable to parse Bio-Logic MPR: {error}.") from error
+    return inspect_layout(path, backend)
 
 
 def _hints(columns: tuple[str | int, ...]) -> tuple[ReaderHint, ...]:
@@ -202,13 +159,14 @@ class BioLogicMPRReader(DelimitedReader):
     """Decode Bio-Logic binary data through the isolated optional Galvani adapter.
 
     Register an instance with ReaderRegistry. read() collects canonical output;
-    iter_read() batches standardized rows but Galvani still loads the complete
-    binary source into memory. Measured current takes precedence; established
+    iter_read() reads bounded binary batches; Galvani supplies metadata/schema
+    definitions without loading the full acquisition. Measured current takes
+    precedence; established
     signed dq is a fallback only when direct current is absent.
     """
 
     name = "biologic-mpr"
-    capabilities = ReaderCapabilities(False, False, ("mpr",))
+    capabilities = ReaderCapabilities(True, False, ("mpr",))
 
     def detect(self, path: Path) -> FormatInfo | None:
         """Recognize MPR magic, with an extension fallback for actionable parse errors.
@@ -227,10 +185,10 @@ class BioLogicMPRReader(DelimitedReader):
         return None
 
     @staticmethod
-    def _table(path: Path, options: ReadOptions) -> tuple[_TablePlan, NDArray[np.void]]:
-        """Load binary measurements and construct a positional shared table plan.
+    def _table(path: Path, options: ReadOptions) -> tuple[_TablePlan, MPRLayout]:
+        """Inspect binary metadata and construct a positional shared table plan.
 
-        Return the plan and structured backend array. Keep duplicate field names
+        Return the plan and bounded source descriptor. Keep duplicate field names
         separate and expose only the adapter's internal representation.
         """
         _binary_options(options)
@@ -239,9 +197,9 @@ class BioLogicMPRReader(DelimitedReader):
         return _TablePlan("", "", ".", None, columns, len(columns), False), data
 
     def inspect(self, path: Path, options: ReadOptions) -> InspectionResult:
-        """Explain binary fields after a full Galvani load and option validation.
+        """Explain binary fields after bounded metadata and option validation.
 
-        Unlike generic text inspection this is not bounded-memory sampling.
+        Measurement values are not read; malformed container framing still fails.
         Return candidates even when later scientific selection is ambiguous.
         """
         plan, _ = self._table(path, options)
@@ -261,43 +219,74 @@ class BioLogicMPRReader(DelimitedReader):
         chunk_size: int,
         emit_missing: bool,
     ) -> Iterator[pd.DataFrame]:
-        """Feed loaded MPR records into the shared scientific conversion pipeline.
+        """Connect bounded binary batches to the unchanged scientific pipeline.
 
-        Apply measured-current hints and verified dq preference, then emit
-        canonical chunks. Chunk size bounds conversion work, not backend input RAM.
+        Yield at most the requested rows. Wide schemas reduce the effective chunk
+        size to bound the full-width string-row buffers used by shared conversion.
         """
-        plan, data = self._table(path, options)
-        hints = _hints(plan.columns)
+        plan, layout = self._table(path, options)
         matches = _matches(plan, options)
-        return self._iter_table(
-            plan,
-            options,
-            matches,
-            self._records(data),
-            chunk_size=chunk_size,
-            emit_missing=emit_missing,
-            source_matches=recognize_columns(
-                plan.columns, vendor="biologic", hints=hints
-            ),
+        # 128 bytes per source cell is a conservative buffer-sizing heuristic,
+        # not a promise of total process RAM or a scientific conversion factor.
+        effective = min(chunk_size, max(1, 8 * 1024**2 // (128 * plan.width)))
+        return self._canonical_chunks(
+            plan, options, matches, layout, effective, emit_missing
         )
 
-    @staticmethod
-    def _records(data: NDArray[np.void]) -> Iterator[list[str]]:
-        """Yield source-width string rows from structured binary measurements.
+    def _canonical_chunks(
+        self,
+        plan: _TablePlan,
+        options: ReadOptions,
+        matches: tuple[ColumnMatch, ...],
+        layout: MPRLayout,
+        chunk_size: int,
+        emit_missing: bool,
+    ) -> Generator[pd.DataFrame, None, None]:
+        """Own source-record lifetime, closing file resources on any iterator exit."""
+        records = self._records(layout, chunk_size)
+        try:
+            yield from self._iter_table(
+                plan,
+                options,
+                matches,
+                records,
+                chunk_size=chunk_size,
+                emit_missing=emit_missing,
+                source_matches=recognize_columns(
+                    plan.columns, vendor="biologic", hints=_hints(plan.columns)
+                ),
+            )
+        finally:
+            records.close()
 
-        Translate nonfinite/malformed numeric representations through the shared
-        pipeline without dropping rows. The structured source array stays in memory.
+    @staticmethod
+    def _records(
+        layout: MPRLayout, chunk_size: int
+    ) -> Generator[list[str], None, None]:
+        """Yield original-width source rows while retaining only one binary batch.
+
+        Numeric string representations match the former Galvani-array path;
+        nonfinite/malformed fields still enter the existing shared validation.
         """
-        names = data.dtype.names
+        names = layout.dtype.names
         assert names is not None
-        for record in data:
-            try:
-                values = [float(record[name]) for name in names]
-            except (TypeError, ValueError) as error:
-                raise CorruptedFileError(
-                    "MPR backend returned nonnumeric source fields."
-                ) from error
-            yield ["" if math.isnan(value) else repr(value) for value in values]
+        batches = layout.iter_arrays(chunk_size)
+        try:
+            for batch in batches:
+                for record in batch:
+                    try:
+                        values = [float(record[name]) for name in names]
+                    except (TypeError, ValueError) as error:
+                        raise CorruptedFileError(
+                            "MPR backend returned nonnumeric source fields."
+                        ) from error
+                    yield ["" if math.isnan(value) else repr(value) for value in values]
+                    del record
+                del batch
+        finally:
+            close = getattr(batches, "close", None)
+            if close is not None:
+                close()
 
 
 def _mpt_plan(path: Path, options: ReadOptions) -> tuple[_TablePlan, int]:

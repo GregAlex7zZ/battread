@@ -1,0 +1,189 @@
+{
+  "scope": "synthetic binary ingestion only; not full standardization",
+  "platform": "Windows",
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "galvani": "0.5.0",
+  "results": [
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.030725700002221856,
+      "baseline": {
+        "rss_bytes": 96120832,
+        "committed_bytes": 573968384
+      },
+      "peak": {
+        "rss_bytes": 198967296,
+        "committed_bytes": 676999168
+      }
+    },
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.02603619999717921,
+      "baseline": {
+        "rss_bytes": 95629312,
+        "committed_bytes": 573321216
+      },
+      "peak": {
+        "rss_bytes": 198479872,
+        "committed_bytes": 676335616
+      }
+    },
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.025422099999559578,
+      "baseline": {
+        "rss_bytes": 95920128,
+        "committed_bytes": 573861888
+      },
+      "peak": {
+        "rss_bytes": 198766592,
+        "committed_bytes": 676888576
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.012431700000888668,
+      "baseline": {
+        "rss_bytes": 95723520,
+        "committed_bytes": 573431808
+      },
+      "peak": {
+        "rss_bytes": 95805440,
+        "committed_bytes": 573431808
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.00946960000146646,
+      "baseline": {
+        "rss_bytes": 95801344,
+        "committed_bytes": 573616128
+      },
+      "peak": {
+        "rss_bytes": 96681984,
+        "committed_bytes": 574423040
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 33555003,
+      "rows": 2097152,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.011509900003147777,
+      "baseline": {
+        "rss_bytes": 95842304,
+        "committed_bytes": 573706240
+      },
+      "peak": {
+        "rss_bytes": 96722944,
+        "committed_bytes": 574509056
+      }
+    },
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.16294989999732934,
+      "baseline": {
+        "rss_bytes": 95903744,
+        "committed_bytes": 573767680
+      },
+      "peak": {
+        "rss_bytes": 507031552,
+        "committed_bytes": 985661440
+      }
+    },
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.10402629999589408,
+      "baseline": {
+        "rss_bytes": 95612928,
+        "committed_bytes": 573526016
+      },
+      "peak": {
+        "rss_bytes": 506744832,
+        "committed_bytes": 985411584
+      }
+    },
+    {
+      "case": "legacy",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.09433820000413107,
+      "baseline": {
+        "rss_bytes": 95621120,
+        "committed_bytes": 573505536
+      },
+      "peak": {
+        "rss_bytes": 506826752,
+        "committed_bytes": 985436160
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.04998709999927087,
+      "baseline": {
+        "rss_bytes": 95916032,
+        "committed_bytes": 573714432
+      },
+      "peak": {
+        "rss_bytes": 96079872,
+        "committed_bytes": 573714432
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.0378982000038377,
+      "baseline": {
+        "rss_bytes": 95641600,
+        "committed_bytes": 573513728
+      },
+      "peak": {
+        "rss_bytes": 96608256,
+        "committed_bytes": 574316544
+      }
+    },
+    {
+      "case": "streaming",
+      "synthetic_file_bytes": 134218299,
+      "rows": 8388608,
+      "chunk_rows": 50000,
+      "elapsed_s": 0.035630300000775605,
+      "baseline": {
+        "rss_bytes": 95928320,
+        "committed_bytes": 573833216
+      },
+      "peak": {
+        "rss_bytes": 96002048,
+        "committed_bytes": 573833216
+      }
+    }
+  ]
+}

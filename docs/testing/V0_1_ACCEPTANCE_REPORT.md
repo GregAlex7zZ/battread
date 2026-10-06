@@ -1,5 +1,10 @@
 # v0.1 implementation acceptance report
 
+Historical initial-release audit. The subsequent MPR ingestion change is
+documented in [ADR 0006](../adr/0006-memory-bounded-mpr-ingestion.md) and the
+[current reader guide](../readers/biologic.md); the original full-memory MPR
+limitation below no longer describes the current supported-layout reader.
+
 Audit date: 2026-10-05. Version **0.1.0** is prepared but not published.
 Repository: https://github.com/GregAlex7zZ/battread. Copyright attribution and
 version metadata are finalized. GitHub private vulnerability reporting has been

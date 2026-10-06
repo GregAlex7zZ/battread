@@ -50,6 +50,8 @@ SOURCE_PATTERNS = (
     "benchmarks/baseline-before.json",
     "benchmarks/baseline-after.json",
     "benchmarks/arrow-probe.json",
+    "benchmarks/mpr_streaming.py",
+    "benchmarks/mpr-memory.json",
 )
 # These are independently licensed fixtures, not maintainer-provided inputs.
 PUBLIC_FIXTURES = (

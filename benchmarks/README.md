@@ -37,3 +37,14 @@ Retained measurements:
 See `docs/developer-guide/benchmarks.md` for results, limitations and decisions.
 These are local baselines, not universal performance guarantees. Further
 experiments should repeat both comparison versions and control machine load.
+
+MPR ingestion has a separate synthetic-only harness:
+
+```powershell
+.\.venv\Scripts\python.exe benchmarks/mpr_streaming.py --output benchmarks/mpr-memory.json
+```
+
+It compares Galvani's original constructor with bounded binary batches in fresh
+processes, including Windows peak committed memory and resident RAM. This scope
+does not benchmark complete scientific standardization. See the developer
+benchmark guide and ADR 0006 for results and interpretation.
