@@ -244,17 +244,141 @@ def test_missing_current_is_retained_across_binary_batches(tmp_path: Path) -> No
     assert sum(len(frame) for frame in frames) == 3
 
 
-def test_unknown_215_is_not_guessed_from_record_length(tmp_path: Path) -> None:
+def test_unknown_field_is_not_guessed_from_record_length(tmp_path: Path) -> None:
     """An upstream-unverified field must fail even when a width might seem plausible."""
-    header = (struct.pack("<IBHH", 1, 2, 4, 215)).ljust(405, b"\x00")
+    header = (struct.pack("<IBHH", 1, 2, 4, 999)).ljust(405, b"\x00")
     source = tmp_path / "unsupported.mpr"
     source.write_bytes(
         binary.MPR_MAGIC
         + wire_module(b"VMP Set   ", 0, b"")
         + wire_module(b"VMP data  ", 2, header + struct.pack("<df", 0.0, 3.0))
     )
-    with pytest.raises(UnsupportedFormatError, match="215"):
+    with pytest.raises(UnsupportedFormatError, match="999"):
         inspect(source)
+
+
+@pytest.mark.parametrize("position", [0, 1, 2, 3])
+@pytest.mark.parametrize("version", [0, 2, 3])
+@pytest.mark.parametrize(
+    "identifier,width",
+    [(115, 8), (116, 8), (175, 4), (176, 4), (177, 4), (182, 8), (215, 4)],
+)
+def test_verified_field_is_opaque_and_never_selected(
+    tmp_path: Path, position: int, version: int, identifier: int, width: int
+) -> None:
+    """Verified opaque bytes may precede canonical fields without shifting values.
+
+    Non-numeric bytes ensure the counter-electrode field is never parsed as
+    current or voltage. Synthetic struct encoding is independent of the reader.
+    """
+    ids = [4, 8, 6]
+    ids.insert(position, identifier)
+    header = struct.pack("<IB", 3, len(ids))
+    if version == 0:
+        header = (header + bytes(ids)).ljust(100, b"\x00")
+    else:
+        header = (header + struct.pack("<4H", *ids)).ljust(
+            405 if version == 2 else 406, b"\x00"
+        )
+    records = bytearray()
+    for time, current, voltage in [
+        (10.0, -2.0, 3.5),
+        (11.0, 3.0, 3.6),
+        (13.0, -4.0, 3.7),
+    ]:
+        cells = [
+            struct.pack("<d", time),
+            struct.pack("<f", current),
+            struct.pack("<f", voltage),
+        ]
+        cells.insert(position, b"\xff" * width)
+        records.extend(b"".join(cells))
+    source = tmp_path / "opaque.mpr"
+    source.write_bytes(
+        binary.MPR_MAGIC
+        + wire_module(b"VMP Set   ", 0, b"")
+        + wire_module(b"VMP data  ", version, header + records)
+    )
+    expected = pd.DataFrame(
+        {
+            "time_s": [0.0, 1.0, 3.0],
+            "current_mA": [-2.0, 3.0, -4.0],
+            "voltage_V": [float(np.float32(v)) for v in (3.5, 3.6, 3.7)],
+        }
+    )
+    pd.testing.assert_frame_equal(read(source), expected)
+    pd.testing.assert_frame_equal(
+        pd.concat(iter_read(source, chunk_size=1), ignore_index=True), expected
+    )
+    assert len(inspect(source).columns) == len(
+        inspect(wire_source(tmp_path / "known.mpr")).columns
+    )
+
+
+def test_opaque_215_preserves_shared_flags_and_duplicate_names() -> None:
+    """Inserted opaque fields must not duplicate packed flag bytes or rename current."""
+    from galvani import BioLogic  # pyright: ignore[reportMissingImports]
+
+    dtype = binary._record_dtype(
+        [1, 215, 2, 8, 215, 215, 8, 215], cast(binary.GalvaniSchema, BioLogic)
+    )
+    assert dtype.names == (
+        "flags",
+        "_ignored_mpr_215_1",
+        "I/mA",
+        "_ignored_mpr_215_2",
+        "_ignored_mpr_215_3",
+        "I/mA 2",
+        "_ignored_mpr_215_4",
+    )
+    assert dtype.itemsize == 25
+    assert BioLogic.VMPdata_colID_dtype_map.get(215) is None
+
+
+def test_215_does_not_enable_unknown_fields_or_wrong_record_width(
+    tmp_path: Path,
+) -> None:
+    """Verified padding cannot become a generic unknown-field or size fallback."""
+    from galvani import BioLogic  # pyright: ignore[reportMissingImports]
+
+    with pytest.raises(NotImplementedError):
+        binary._record_dtype([4, 215, 999], cast(binary.GalvaniSchema, BioLogic))
+    header = (struct.pack("<IBHH", 1, 2, 4, 215)).ljust(405, b"\x00")
+    source = tmp_path / "wrong-width.mpr"
+    source.write_bytes(
+        binary.MPR_MAGIC
+        + wire_module(b"VMP Set   ", 0, b"")
+        + wire_module(b"VMP data  ", 2, header + struct.pack("<dd", 0.0, 3.0))
+    )
+    with pytest.raises(CorruptedFileError, match="payload length"):
+        inspect(source)
+
+
+def test_mixed_accessory_widths_preserve_wire_offsets() -> None:
+    """Mixed-width skips and shared flags preserve independently encoded values."""
+    from galvani import BioLogic  # pyright: ignore[reportMissingImports]
+
+    identifiers = [115, 1, 4, 175, 2, 116, 8, 176, 182, 177, 6, 215]
+    dtype = binary._record_dtype(identifiers, cast(binary.GalvaniSchema, BioLogic))
+    wire = (
+        b"\xff" * 8
+        + struct.pack("<Bd", 3, 10.0)
+        + b"\xff" * 12
+        + struct.pack("<f", -2.0)
+        + b"\xff" * 16
+        + struct.pack("<f", 3.5)
+        + b"\xff" * 4
+    )
+    assert dtype.itemsize == len(wire)
+    record = np.frombuffer(wire, dtype=dtype)[0]
+    assert record["time/s"] == 10.0
+    assert record["I/mA"] == -2.0
+    assert record["Ewe/V"] == 3.5
+    assert record["flags"] == 3
+    assert all(
+        identifier not in BioLogic.VMPdata_colID_dtype_map
+        for identifier in (115, 116, 175, 176, 177, 182, 215)
+    )
 
 
 def test_header_seek_arithmetic_uses_python_ints(

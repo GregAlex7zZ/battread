@@ -87,12 +87,16 @@ use `iter_read()` or `convert()` for large acquisitions.
 Iterators release the source on exhaustion, error or explicit `close()`. Sources
 must remain unchanged during processing; detected replacement/truncation/mutation
 raises an error. The buffer ceiling is not a strict total-process RAM limit.
-Unsupported Galvani column IDs (including unverified ID 215) raise
+Verified accessory IDs 115, 116, 175, 176, 177, 182 and 215 are skipped as
+opaque padding with their explicit four/eight-byte widths; they cannot become
+canonical candidates. See [MPR architecture](../developer-guide/mpr-reader.md).
+Other genuine recognition ambiguities still require explicit column selection.
+Other unsupported Galvani column IDs raise
 `UnsupportedFormatError`; corrupted or truncated acquisitions raise
 `CorruptedFileError`. No binary format coverage beyond the tested Galvani
 schemas is promised. Capacity resets are never repaired or unwrapped.
 
-See [ADR 0006](../adr/0006-memory-bounded-mpr-ingestion.md) and the
+See [MPR architecture](../developer-guide/mpr-reader.md) and the
 [synthetic memory comparison](../developer-guide/benchmarks.md).
 
 Acceptance tests use an unchanged, attributed MPR/MPT pair and an independent

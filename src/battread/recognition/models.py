@@ -58,7 +58,7 @@ class InspectionResult:
 
     Returned by inspect() without producing a canonical measurement frame. The
     result is small, but inspection memory and scanning depend on the adapter;
-    MPR inspection uses a backend load rather than a bounded input sample.
+    MPR inspection scans bounded metadata without loading measurement records.
 
     Attributes:
         format: Source format identifier.

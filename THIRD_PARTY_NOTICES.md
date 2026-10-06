@@ -6,7 +6,7 @@ The packages below are declared in `pyproject.toml`. The prospective set was
 installed together on CPython 3.14, imported successfully, and exercised with a
 pandas/PyArrow Parquet round trip. Minimum versions preserve the Python 3.11
 project floor; continuous integration is configured for the supported Python
-versions but has not run in this source workspace.
+versions and minimum dependency combinations.
 
 | Dependency | Purpose | Group | Declared constraint | License metadata | Compatibility evidence |
 |---|---|---|---|---|---|
@@ -41,6 +41,13 @@ only below Python 3.8 and is inactive for battread's supported versions.
 These credits describe technical contributions and do not imply endorsement
 of battread by the projects, their authors or their copyright holders.
 
+The explicit layouts for Bio-Logic accessory field IDs 115, 116, 175, 176,
+177, 182 and 215 are informed by
+[yadg's column registry](https://github.com/dgbowl/yadg/blob/main/src/yadg/extractors/eclab/mpr_columns.py),
+checked on 2026-10-06. Credit to Nicolas Vetsch, Peter Kraus and collaborators.
+Only the targeted format facts are used; no yadg implementation or package is
+bundled. See [MPR architecture](docs/developer-guide/mpr-reader.md) for scope and limitations.
+
 The wheel contains battread source and its license material. It does not
 bundle NumPy, pandas, Arrow, Galvani, NewareNDA or their binaries. Runtime
 packages are separately resolved dependencies retaining their own distributed
@@ -74,27 +81,6 @@ code, and retain their own license. Their provenance, hashes, independent
 reference, attribution, and modifications made only to runtime test derivatives
 are recorded in [the fixture README](tests/data/biologic/README.md).
 See the [CC-BY-4.0 legal terms](https://creativecommons.org/licenses/by/4.0/legalcode.en).
-
-## Release work still required
-
-The Windows/Linux Python 3.11-3.14 and minimum-core matrix passed on
-2026-10-05. Exact configurations and passing strict static checks
-are recorded in [the compatibility report](docs/testing/PYTHON_COMPATIBILITY.md).
-Local Ubuntu runtime, dependency and strict typing checks pass. Remote GitHub
-Actions results remain pending.
-
-Before a release, maintainers must:
-
-- Run the configured Linux CI for the minimum dependency set on CPython 3.11
-  and current dependencies on every supported interpreter.
-- Recheck dependency versions, bundled-component notices and artifact contents
-  for the final release environment. A distribution that bundles dependencies
-  or publishes generated documentation requires a separate asset/license review.
-- Retain COPYRIGHT.md, AUTHORS.md and the unmodified upstream notices.
-  Copyright attribution and AI disclosure are finalized for the prepared release.
-
-The complete project license text is in [LICENSE](LICENSE). This inventory must
-be updated with release-specific evidence and notices during implementation.
 
 ## Neware fixtures
 

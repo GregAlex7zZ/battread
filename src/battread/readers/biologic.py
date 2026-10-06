@@ -193,7 +193,11 @@ class BioLogicMPRReader(DelimitedReader):
         """
         _binary_options(options)
         data = _load_mpr(path)
-        columns = cast(tuple[str | int, ...], data.dtype.names)
+        columns = tuple(
+            name
+            for name in data.dtype.names or ()
+            if not name.startswith("_ignored_mpr_")
+        )
         return _TablePlan("", "", ".", None, columns, len(columns), False), data
 
     def inspect(self, path: Path, options: ReadOptions) -> InspectionResult:
@@ -268,8 +272,11 @@ class BioLogicMPRReader(DelimitedReader):
         Numeric string representations match the former Galvani-array path;
         nonfinite/malformed fields still enter the existing shared validation.
         """
-        names = layout.dtype.names
-        assert names is not None
+        names = tuple(
+            name
+            for name in layout.dtype.names or ()
+            if not name.startswith("_ignored_mpr_")
+        )
         batches = layout.iter_arrays(chunk_size)
         try:
             for batch in batches:

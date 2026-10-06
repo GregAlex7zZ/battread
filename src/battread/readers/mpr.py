@@ -31,6 +31,10 @@ from battread.exceptions import (
 MPR_MAGIC = b"BIO-LOGIC MODULAR FILE\x1a".ljust(48) + b"\x00" * 4
 _MAX_BINARY_BYTES = 8 * 1024**2
 _RETAINED_MODULES = {b"VMP Set   ", b"VMP data  ", b"VMP loop  ", b"VMP LOG   "}
+# Explicit yadg definitions, not its generic unknown-column fallback. Impedance
+# and counter-electrode values are outside our canonical schema; see the MPR
+# developer guide for provenance and the conservative skip policy.
+_OPAQUE_FIELD_BYTES = {115: 8, 116: 8, 175: 4, 176: 4, 177: 4, 182: 8, 215: 4}
 
 
 class GalvaniSchema(Protocol):
@@ -213,7 +217,7 @@ def _measurement(
         raise ValueError(f"Unrecognised version for MPR data module: {module.version}")
     if len(identifiers) != columns or end > offset or any(padding):
         raise ValueError("Invalid MPR field-ID or reserved-header bytes")
-    dtype, _ = backend.VMPdata_dtype_from_colIDs(identifiers)
+    dtype = _record_dtype(identifiers, backend)
     if not dtype.names or dtype.itemsize <= 0:
         raise ValueError("Backend returned no structured scientific table")
     if module.length - offset != rows * dtype.itemsize:
@@ -221,6 +225,47 @@ def _measurement(
             "MPR payload length does not match declared measurement records"
         )
     return module.offset + offset, rows, dtype
+
+
+def _record_dtype(identifiers: list[int], backend: GalvaniSchema) -> np.dtype[np.void]:
+    """Delegate known fields and insert verified, non-scientific opaque padding.
+
+    yadg's explicit definitions establish widths for the allowlisted impedance
+    and counter-electrode fields. Retain opaque bytes rather than introducing
+    scientific candidates. All other unknown IDs still fail.
+    Prefix sizes from Galvani preserve its shared flag byte and duplicate names;
+    its global schema is never patched. See the MPR developer guide for provenance.
+    """
+    if not any(identifier in _OPAQUE_FIELD_BYTES for identifier in identifiers):
+        dtype, _ = backend.VMPdata_dtype_from_colIDs(identifiers)
+        return dtype
+    known: list[int] = []
+    positions: dict[int, list[int]] = {}
+    for identifier in identifiers:
+        if identifier in _OPAQUE_FIELD_BYTES:
+            size = backend.VMPdata_dtype_from_colIDs(known)[0].itemsize if known else 0
+            positions.setdefault(size, []).append(identifier)
+        else:
+            known.append(identifier)
+    dtype, _ = backend.VMPdata_dtype_from_colIDs(known)
+    fields: list[tuple[str, np.dtype[np.generic]]] = []
+    known_fields = cast(Mapping[str, tuple[np.dtype[np.generic], int]], dtype.fields)
+    offset = 0
+    skipped = 0
+    for name in (*(dtype.names or ()), None):
+        for identifier in positions.get(offset, []):
+            skipped += 1
+            fields.append(
+                (
+                    f"_ignored_mpr_{identifier}_{skipped}",
+                    np.dtype(f"V{_OPAQUE_FIELD_BYTES[identifier]}"),
+                )
+            )
+        if name is not None:
+            field_dtype = known_fields[name][0]
+            fields.append((name, field_dtype))
+            offset += field_dtype.itemsize
+    return np.dtype(fields)
 
 
 def _validate_auxiliary(

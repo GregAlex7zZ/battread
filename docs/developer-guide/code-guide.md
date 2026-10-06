@@ -49,7 +49,7 @@ battread.write(data, "standardized.parquet")
 collects standardized chunks into a DataFrame. When only a file is needed,
 `convert` consumes the chunks directly and publishes output after successful
 completion. Incremental iteration does not guarantee bounded input memory for
-every adapter: MPR uses a full backend load, and Neware binary processing can
+every adapter: MPR uses bounded binary batches, while Neware binary processing can
 retain checkpoint metadata. Consult each reader's docstrings and capabilities.
 
 Direct current takes precedence even if its values are missing. Reconstruction
@@ -90,5 +90,4 @@ Run `python tools/check_code_docs.py`. CI and pre-commit reject missing or empty
 docstrings; overload stubs inherit implementation documentation. This check
 cannot judge correctness, comprehensibility or language. Reviewers must verify
 that explanations match the implementation, that examples are usable, and that
-scientific assumptions and limitations are explicit. Substantial AI assistance
-does not reduce this review requirement.
+scientific assumptions and limitations are explicit.

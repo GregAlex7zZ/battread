@@ -4,9 +4,10 @@ The implemented public surface includes generic delimited and canonical
 Parquet, Bio-Logic and Neware reading, inspection, streaming chunks, canonical writing and
 conversion, schema constants, validation, and merging.
 
-Bio-Logic MPR inspection loads the complete backend table; see the reader guide
-for its memory limitation. MPT inspection samples text without loading the
-complete acquisition.
+Bio-Logic MPR inspection reads bounded metadata; MPT inspection samples text.
+Neither loads all measurement values. `read()` collects the full result, while
+`iter_read()` and `convert()` support incremental consumption; see
+[large files](../user-guide/large-files.md).
 
     from battread import (
         CANONICAL_COLUMNS,

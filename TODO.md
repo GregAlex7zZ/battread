@@ -1,80 +1,34 @@
-﻿# Checklist for future releases
+# Future work
 
-Updated on 2026-10-06. This list tracks future work; checks required before the
-first publication remain in `RELEASE_STATUS.md`. When completing an item,
-record the release version, added tests and verified result.
+## Reader compatibility
 
-## Sole implementation priority
+- [ ] Obtain redistributable matching MPR/MPT exports covering accessory fields
+  and additional recording conventions. Add independent numerical regressions.
+- [ ] Validate complete real Neware NDA/NDAX acquisitions and matching exports.
+  Binary support remains experimental; CSV autoexports are the current focus.
+- [ ] Investigate rejected Neware framing, conflicting split-file checkpoints
+  and distinctions between padding and final measurements. Preserve explicit
+  failure until semantics are verified.
+- [ ] Expand Neware CSV profiles while preserving Total Time precedence.
 
-- [x] **Implement memory-bounded Bio-Logic MPR ingestion.** Implemented for
-  supported layouts with bounded metadata and binary record reads. Follow
-  [the dedicated priority handoff](docs/implementation/MPR_STREAMING_PRIORITY.md).
-  Scientific comparisons, corruption/closure regressions and fresh-process
-  synthetic memory measurements are recorded. Other work remains deferred until
-  the maintainer chooses the next priority.
-- [ ] **Verify unsupported MPR field ID 215 independently.** Galvani 0.5 lacks
-  this definition. Preserve explicit failure until a reference layout/export
-  establishes its width; do not guess. This is a compatibility follow-up, not an
-  unresolved full-memory allocation.
+## Performance
 
-## Deferred: Neware data
+- [ ] Benchmark wider, multi-GB and NaN-heavy inputs, including reconstruction;
+  measure peak committed memory, physical RAM, disk use and throughput.
+- [ ] Benchmark two independent conversion processes against sequential work.
+  Introduce parallel scheduling only with bounded queues, a shared memory budget,
+  unique outputs and equivalent scientific results. Preserve chunk boundary state.
+- [ ] Evaluate a PyArrow CSV fast path only after dialect, units, malformed cells,
+  warning behavior and scientific equivalence are demonstrated.
+- [ ] Profile capacity reconstruction before optimizing its stateful processing.
 
-The current Neware workflow uses **CSV autoexports**. The `.nda`/`.ndax`
-adapters remain available as experimental features: some layouts have only
-synthetic fixture coverage. They are not required for Alessandro Gregucci's
-current workflow.
+## Maintenance
 
-- [ ] **Validate NDA/NDAX against complete real acquisitions.** Obtain
-  redistributable files and matching exports from the same experiment. Compare
-  every time, current and voltage row, including order, sign and units. Record
-  instrument, software, layout, backend, provenance and reference. Completion:
-  independent, chunk-equivalent tests for each declared layout, covering
-  positive/negative current, rest and step changes.
-- [ ] **Investigate binary records currently rejected.** In particular, NDA
-  `AA` framing, conflicting NDAX checkpoints and the distinction between padding
-  and final zero-valued measurements. Obtain examples and verified semantics
-  before changing parsing. Completion: regressions demonstrating no row loss or
-  arbitrary scientific repair; otherwise retain explicit errors.
-- [ ] **Expand CSV autoexport profiles.** Collect headers, delimiters and time
-  formats beyond the current sample. Verify Total Time against resetting step
-  time. Completion: explainable recognition and tests for each profile, with
-  explicit mapping wherever ambiguity remains.
-- [ ] **Reassess experimental binary support.** Promote only sufficiently
-  verified layouts and update reader guides, README and acceptance reports.
-  Do not extrapolate format-version coverage to all instruments.
+- [ ] Validate macOS and ARM before claiming tested support.
+- [ ] Recheck dependency upgrades against supported Python versions, minimum
+  requirements, licensed fixtures and exact distribution artifacts.
+- [ ] Add a regression for every real parsing/recognition issue.
+- [ ] Keep examples runnable and notebook outputs cleared before committing.
+- [ ] Review English documentation, third-party notices and limitations each release.
 
-## Performance and large files
-
-- [ ] **Benchmark multi-GB files and wider tables.** Repeat timing and peak-RAM
-  measurements across sizes and chunks, including NaN, duplicate times and
-  reconstruction. Completion: scientifically equivalent streaming and memory
-  explained in terms of chunks, metadata and buffers, without invented targets.
-- [ ] **Evaluate PyArrow CSV as a fast path.** The current probe measures parsing
-  alone. Before integration, demonstrate equivalent dialects, clock handling,
-  units, malformed cells, duplicate labels, warnings and errors, plus a measured
-  performance benefit.
-- [ ] **Profile current reconstruction.** Optimize only after measurement,
-  preserving original adjacency, previous/next alignment, endpoints, reset
-  handling and state across chunks. Completion: regressions and before/after
-  benchmarks.
-
-## Maintenance after publication
-
-- [ ] **Validate macOS and ARM environments.** The initial release checks cover
-  Windows and Ubuntu x86-64. Run installed-wheel, optional-backend and minimum
-  dependency checks on additional platforms before claiming verified support.
-- [ ] **Verify dependency upgrades.** Run the CI matrix, supported minimum
-  dependency tests, vendor fixtures and artifact checks. Reaudit NewareNDA's
-  private APIs before changing the pinned version.
-- [ ] **Turn every real issue into a regression.** Retain a minimal
-  redistributable example, expected interpretation and reason for the fix;
-  update documented limitations.
-- [ ] **Review installation, examples and notebooks for every release.** Test
-  the installed wheel and retain a minimal example alongside detailed demos.
-  Update the changelog and this checklist without claiming unperformed checks.
-- [ ] **Keep public-facing material in English.** Review documentation, example
-  notebooks, user-facing messages and contribution notes before publication.
-
-Cycle, capacity and energy analysis, plotting and Excel remain outside the
-library's scope. Any additional functionality requires a separate decision;
-this checklist does not introduce it automatically.
+Cycle, capacity and energy analysis and plotting remain outside library scope.

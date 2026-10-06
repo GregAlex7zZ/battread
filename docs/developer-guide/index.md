@@ -1,25 +1,28 @@
-# Developer guide
+# Development
 
-Create and activate a virtual environment, then install all development and
-documentation dependencies:
+Install the development environment:
 
 ```bash
 python -m pip install -e ".[dev,docs,all]"
 ```
 
-Run the foundation checks with:
+Run these checks from the project root:
 
 ```bash
-ruff check .
-ruff format --check .
+python -m pytest
+python -m ruff check .
+python -m ruff format --check .
+python tools/check_code_docs.py
 python -m pyright --pythonpath "$(python -c 'import sys; print(sys.executable)')"
-pytest
-mkdocs build --strict
+python -m mkdocs build --strict
 python -m build
 ```
 
-Vendor fixtures must also run with each optional extra installed. CI checks
-core-only installations and Python 3.11–3.14; the minimum core dependency job
-uses Python 3.11. Local validation currently uses Python 3.14.6.
-See [benchmarks](benchmarks.md) and [the acceptance report](../testing/V0_1_ACCEPTANCE_REPORT.md).
+In PowerShell, the Pyright command above also resolves the active interpreter.
+Install Git hooks with `pre-commit install`; run `pre-commit run --all-files`
+before committing. CI checks Python 3.11-3.14, minimum core dependencies and
+optional reader installations. Binary-reader tests need their respective extras.
+
+See the [code guide](code-guide.md), [dependency policy](dependencies.md),
+[benchmarks](benchmarks.md) and [MPR architecture](mpr-reader.md).
 Contributor instructions are in the root `CONTRIBUTING.md`.

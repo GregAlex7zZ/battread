@@ -1,15 +1,30 @@
-# User guide
+# Getting started
 
-Battread currently reads generic CSV and TXT sources containing direct elapsed
-time, measured current, and measured voltage, as well as canonical Parquet and
-[Bio-Logic MPR/MPT](../readers/biologic.md) and
-[Neware NDA/NDAX and CSV exports](../readers/neware.md).
-It writes canonical Parquet, CSV, and TXT and can stream conversions between
-supported sources and these output formats. See
-[Reading delimited data](reading-delimited.md) for automatic and explicit
-workflows and [Writing and conversion](writing-and-conversion.md) for canonical
-outputs. See [Current reconstruction](current-reconstruction.md) for the
-supported capacity semantics and required explicit declarations.
+```python
+import battread
 
-The [technical specification](../specification/TECHNICAL_SPECIFICATION.md)
-remains the authoritative behavior contract.
+data = battread.read("experiment.csv")
+battread.write(data, "standardized.parquet")
+```
+
+That is the basic workflow: read a supported source into a pandas DataFrame,
+then save it as Parquet, CSV or TXT. The result contains exactly `time_s`,
+`current_mA`, and `voltage_V` as float64. Time starts at zero and measured
+current preserves its sign.
+
+The runnable `examples/getting_started.ipynb` notebook uses synthetic data and
+introduces reading and saving before optional inspection, mappings and merging.
+Install Jupyter separately and use the Python environment containing battread.
+
+For large files, avoid assembling the complete result:
+
+```python
+battread.convert("large.csv", "standardized.parquet", chunk_size=10_000)
+```
+
+See [large files](large-files.md) for streaming and memory, [reader guides](../readers/index.md)
+for supported formats, [delimited inputs](reading-delimited.md) for explicit
+parser/column options, and [writing](writing-and-conversion.md) for output rules.
+[Current reconstruction](current-reconstruction.md) explains the supported
+fallback when measured current is absent. The [API](../api/index.md) documents
+arguments, errors and warnings.

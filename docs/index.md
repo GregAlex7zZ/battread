@@ -1,26 +1,23 @@
 # battread
 
-`battread` standardizes supported electrochemical cycling data into three
-canonical `float64` columns:
+Standardize electrochemical cycling data into `time_s`, `current_mA`, and
+`voltage_V`: three float64 columns in a pandas DataFrame.
 
-```text
-time_s
-current_mA
-voltage_V
+```python
+import battread
+
+data = battread.read("experiment.csv")
+battread.write(data, "standardized.parquet")
 ```
 
-The v0.1 implementation includes generic CSV/TXT, canonical Parquet, Bio-Logic
-and supported Neware layouts. Version 0.1.0 is prepared with author, license and
-repository metadata. Remote GitHub Actions and security-channel activation
-remain pending. The specifications define the scientific and
-public API contracts; see the [acceptance report](testing/V0_1_ACCEPTANCE_REPORT.md)
-for validation evidence and release limitations.
+Begin with [usage](user-guide/index.md), then consult the [API](api/index.md)
+and [reader guides](readers/index.md). For large acquisitions, use
+[streaming conversion](user-guide/large-files.md) rather than collecting a
+complete DataFrame. The example notebook in `examples/getting_started.ipynb`
+provides a runnable introduction with synthetic data.
 
 ## No warranty
 
-The software is provided as is, without warranty, to the extent permitted by
-applicable law. Users must independently verify converted measurements against
-their source records before relying on results. Tests do not certify all source
-formats or scientific conclusions. Warranty exclusions and liability limits
-are governed by sections 15-17 of the GPL-3.0-or-later license supplied with the
-project; mandatory legal obligations remain applicable.
+Provided as is, without warranty, under GPL-3.0-or-later. Independently verify
+converted measurements before relying on scientific results. The license's
+warranty exclusions and liability limits apply subject to applicable law.

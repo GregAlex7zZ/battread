@@ -1,7 +1,6 @@
 # 0003: Prefer verified Bio-Logic dq when measured current is absent
 
-Status: accepted following the user's explicit clarification.
-Supersedes the dq restriction in ADR 0002; its other decisions remain applicable.
+Status: accepted.
 
 ## Decision
 

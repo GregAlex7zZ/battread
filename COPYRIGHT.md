@@ -3,7 +3,7 @@
 Copyright (C) 2026 Alessandro Gregucci, for original battread contributions.
 
 The project source is distributed under GPL-3.0-or-later; see LICENSE.
-Authorship and substantial AI assistance are described in AUTHORS.md. This
+Authorship is recorded in AUTHORS.md. This
 notice does not claim authorship or ownership of third-party implementations,
 adapted material, dependencies or fixtures.
 

@@ -241,7 +241,7 @@ def inspect(
 
     Use the same options as read(). Ambiguous/unresolved matches stay visible
     with evidence rather than forcing successful conversion. Generic text
-    inspection samples bounded records; MPR loads the backend table and split
+    inspection samples bounded records; MPR scans bounded metadata and split
     NDAX scans metadata/primary blocks. Inspection is not whole-source validation.
 
     Args:
@@ -407,7 +407,7 @@ def iter_read(
         path: Existing source file; content-based registry detection takes precedence
             over an arbitrary filename extension.
         chunk_size: Positive maximum row count per canonical chunk. Some adapters,
-            notably MPR, still load the full source through their backend.
+            may retain format-specific metadata in addition to chunk buffers.
         reader: Optional registered adapter or format alias, such as csv or mpr.
         columns: Semantic keys mapped to source names or zero-based positions.
             Duplicate names require positions; explicit mappings override recognition.

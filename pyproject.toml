@@ -80,6 +80,24 @@ docs = [
 packages = ["src/battread"]
 
 [tool.hatch.build.targets.sdist]
+include = [
+    "/src/**/*.py", "/src/**/py.typed", "/tests/**/*.py", "/docs/**/*.md",
+    "/tools/check_code_docs.py", "/benchmarks/*.py", "/benchmarks/*.md",
+    "/benchmarks/*.json", "/examples/getting_started.ipynb", "/licenses/*.txt",
+    "/README.md", "/LICENSE", "/COPYRIGHT.md", "/AUTHORS.md",
+    "/CONTRIBUTING.md", "/CHANGELOG.md", "/CODE_OF_CONDUCT.md", "/SECURITY.md",
+    "/THIRD_PARTY_NOTICES.md", "/TODO.md", "/pyproject.toml", "/mkdocs.yml",
+    "/.gitignore", "/.gitattributes", "/.editorconfig", "/.pre-commit-config.yaml",
+    "/.github/workflows/*.yml",
+    "/tests/data/biologic/README.md", "/tests/data/biologic/CC-BY-4.0.txt",
+    "/tests/data/biologic/020-formation_CB5.mpr",
+    "/tests/data/biologic/020-formation_CB5.mpr.license",
+    "/tests/data/biologic/020-formation_CB5.mpt",
+    "/tests/data/biologic/020-formation_CB5.mpt.license",
+    "/tests/data/neware/README.md", "/tests/data/neware/LICENSE",
+    "/tests/data/neware/prefix.nda", "/tests/data/neware/small.ndax",
+    "/tests/data/neware/conflicting.ndax",
+]
 exclude = ["/.cache/**", "/.pre-commit-cache/**"]
 
 

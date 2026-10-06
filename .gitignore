@@ -35,3 +35,7 @@ private/
 !/tests/data/neware/prefix.nda
 !/tests/data/neware/small.ndax
 !/tests/data/neware/conflicting.ndax
+
+# Only the reviewed, output-free synthetic introduction is public.
+!/examples/getting_started.ipynb
+.ipynb_checkpoints/

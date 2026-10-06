@@ -1,6 +1,6 @@
 # Performance and memory baselines
 
-Milestone 9 establishes measured baselines without throughput targets. Run
+Measured baselines are provided without throughput targets. Run
 `python benchmarks/run.py` from the repository root to reproduce the suite.
 Full measurements and the harness are in `benchmarks/`.
 
@@ -84,7 +84,7 @@ The 250,000-row public conversion default remains unchanged. The experiments
 show that smaller explicitly selected chunks reduce memory; they do not justify
 a universal optimal default. Reconstruction retains its stateful row processing,
 which still dominates that path. Multi-file streaming and merge-to-file are
-explicitly deferred beyond v0.1 by the acceptance specification.
+outside the current public API.
 
 Further work: repeated before/after measurements under controlled machine load,
 wider and multi-GB fixtures, vendor profiles, reset/NaN-heavy performance cases,

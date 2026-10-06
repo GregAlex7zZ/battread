@@ -1,6 +1,6 @@
 # 0004: Strict Neware records and recorded timestamps
 
-Accepted for Milestone 8.
+Status: accepted.
 
 The audited NewareNDA 2026.6.11 high-level functions sort or deduplicate NDA
 measurements and interpolate split NDAX timestamps. These operations conflict

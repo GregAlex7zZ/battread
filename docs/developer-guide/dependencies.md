@@ -11,6 +11,6 @@ optional and must only be imported within their reader adapters. Full audit
 evidence and release-time obligations are tracked in the root
 `THIRD_PARTY_NOTICES.md` file.
 
-Minimum-version and current-version CI are both required before v0.1. Parser
+Minimum-version and current-version CI must pass before a release. Parser
 behavior still needs representative, independently verified vendor fixtures;
 successful installation or import does not establish scientific correctness.
