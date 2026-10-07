@@ -1,9 +1,15 @@
 # Reading delimited data
 
 Elapsed `HH:MM:SS[.fraction]` values support unbounded hours and require seconds
-as the time unit. For exports containing both a resetting step clock and total
-elapsed time, select the latter explicitly, for example
-`read(path, columns={"time": "Total Time"}, units={"time": "s"})`.
+as the time unit. CSVs containing both `Time` and `Total Time` automatically use
+`Total Time`, regardless of vendor. Case, whitespace and normalized separators
+are ignored (`total_time` and `Total Time` are equivalent labels). Explicit unit
+suffixes are preserved; bare paired `Total Time` means seconds. Numeric minutes,
+hours or milliseconds are converted according to their declared units.
+An unknown or incompatible unit raises an error, rather than becoming seconds.
+
+Explicit mappings take precedence, for example
+`read(path, columns={"time": "Time(s)"})` to select the other clock.
 Invalid minute/second fields are retained as NaN with warnings.
 
 `read()` loads a complete CSV or TXT source and returns a pandas DataFrame with
@@ -78,3 +84,26 @@ safely. Rows are never skipped automatically.
 Duplicate candidate measurements and other scientific ambiguities remain
 inspectable, while `read()` requires an explicit column mapping before it can
 standardize them.
+
+
+## Remaining ambiguities
+
+Two `Total Time` columns still require a positional choice. A third distinct
+measured clock is not suppressed by the paired-clock preference. Other duplicate
+current or voltage candidates also raise `AmbiguousColumnError`.
+
+```python
+information = inspect("experiment.csv")
+# Positions are zero-based and distinguish duplicate labels.
+data = read("experiment.csv", columns={"current": 2}, units={"current": "mA"})
+```
+
+This preference belongs to the CSV reader, not to global fuzzy recognition.
+Generic TXT files keep conservative selection; verified vendor profiles may
+establish their own time semantics. `autodetect=False` still requires explicit
+mappings and units. Standardized output retains missing rows, direct current
+sign, time order and scientifically equivalent chunked results.
+
+The separate [desktop GUI](https://github.com/GregAlex7zZ/battread-gui) can ask for
+an explicit column and unit when ambiguity occurs, then resume its worker. The
+library itself never opens a dialog; its public mapping API is unchanged.

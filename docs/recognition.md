@@ -21,3 +21,14 @@ user must provide explicit options through a reader API.
 capacity semantic, interval alignment, state, confidence, and evidence. The
 public decision is its `resolved`, `ambiguous`, `unresolved`, or `explicit`
 state; confidence is an internal ranking value rather than scientific truth.
+
+
+## CSV paired-clock preference
+
+The CSV adapter applies the documented `Total Time` over `Time` preference after
+label/unit recognition and before explicit mappings. This is independent of
+vendor. Bare paired `Total Time` is seconds; declared units are preserved.
+`inspect()` records selected and superseded candidates. The global recognition
+engine remains conservative, and other ambiguities require explicit selectors.
+See [the decision](adr/0009-csv-total-time-preference.md) and
+[the CSV guide](user-guide/reading-delimited.md) for units and exceptions.

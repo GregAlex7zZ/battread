@@ -7,12 +7,13 @@ exports is deferred to future versions, tracked in the root `TODO.md` checklist.
 Existing tests and conservative error behavior remain in place.
 
 Neware CSV exports use the generic streaming reader without an optional backend.
-The export profile containing DataPoint, Step Type, Time, Total Time,
-Current(mA), Voltage(V), Capacity(mAh), Energy(Wh), Date and Power(W) selects
-Total Time automatically. The step clock Time is rejected with evidence in
-`inspect()`. Clock values become elapsed float64 seconds starting at zero.
-Explicit column mappings retain precedence. Other CSV header variants still
-require ordinary recognition or explicit mapping.
+CSV exports containing both Time and Total Time select Total Time automatically,
+using the general CSV policy. Step Type can be missing or unnamed; a vendor
+signature is not needed for this paired-clock preference. Explicit units are
+respected; bare paired Total Time means seconds. The rejected step clock and
+selected total clock are explained in `inspect()`. Clock values become elapsed
+float64 seconds starting at zero. Explicit mappings retain precedence, while
+duplicate total clocks and unrelated ambiguities still require a choice.
 
 Install `pip install "battread[neware]"` for NDA and NDAX support.
 The isolated adapter uses NewareNDA 2026.6.11 (BSD-3-Clause) record decoders.

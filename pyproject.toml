@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "battread"
-version = "0.1.0"
+version = "0.1.2"
 description = "Vendor-independent standardization of electrochemical cycling data."
 authors = [{name = "Alessandro Gregucci"}]
 maintainers = [{name = "Alessandro Gregucci"}]
@@ -75,6 +75,10 @@ docs = [
     "mkdocstrings[python]>=0.29.1",
 ]
 
+
+# Avoid traversing ignored local environments and caches when building from Git.
+[tool.hatch.build]
+skip-excluded-dirs = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/battread"]

@@ -43,7 +43,7 @@ from battread.readers.models import (
     ReadOptions,
     SemanticKey,
 )
-from battread.recognition import recognize_columns, resolve_quantity
+from battread.recognition import parse_label, recognize_columns, resolve_quantity
 from battread.recognition.models import (
     CapacitySemantic,
     ColumnMatch,
@@ -426,20 +426,22 @@ def _inspection_matches(
     *,
     vendor: str | None = None,
     hints: Sequence[ReaderHint] = (),
+    prefer_total_time: bool = False,
 ) -> tuple[ColumnMatch, ...]:
     """Combine declarative recognition, verified hints and explicit user overrides.
 
     Use a structural plan plus ReadOptions; return one ColumnMatch per original
     column. Preserve rejected evidence and duplicate positions. The verified
-    Neware CSV profile establishes Total Time over step/calendar fields. Apply
+    Neware CSV profiles and the CSV paired-clock policy establish elapsed time. Apply
     explicit mappings and units last, and reject unsafe canonical overrides.
     """
     if options.autodetect:
         matches = list(recognize_columns(plan.columns, vendor=vendor, hints=hints))
-        # This exact export signature establishes total elapsed vs step time.
+        # The measurement signature establishes total elapsed vs step time.
+        # Step Type is optional: some exports omit it or leave its label blank.
+        # Keep the other exact labels required; generic paired clocks stay ambiguous.
         neware_export = {
             "DataPoint",
-            "Step Type",
             "Time",
             "Total Time",
             "Current(mA)",
@@ -471,6 +473,38 @@ def _inspection_matches(
                             "Neware CSV profile: step or calendar time rejected",
                         ),
                     )
+        if prefer_total_time:
+            labels = [parse_label(column) for column in plan.columns]
+            if any(label.normalized_label == "time" for label in labels) and any(
+                label.normalized_label == "total time" for label in labels
+            ):
+                for index, (match, label) in enumerate(
+                    zip(matches, labels, strict=True)
+                ):
+                    if label.normalized_label == "total time":
+                        # Bare Total Time is seconds by the documented CSV policy.
+                        # An explicit unit is never replaced by this default.
+                        unit = label.canonical_unit if label.unit_expression else "s"
+                        matches[index] = replace(
+                            match,
+                            quantity="time",
+                            unit=unit,
+                            state="resolved",
+                            confidence=1.0,
+                            evidence=(
+                                *match.evidence,
+                                "CSV time preference: Total Time supersedes Time",
+                            ),
+                        )
+                    elif label.normalized_label == "time":
+                        matches[index] = replace(
+                            match,
+                            state="unresolved",
+                            evidence=(
+                                *match.evidence,
+                                "CSV time preference: Time superseded by Total Time",
+                            ),
+                        )
     else:
         matches = [
             ColumnMatch(
@@ -973,7 +1007,9 @@ class DelimitedReader:
         ambiguous candidates instead of requiring a successful conversion.
         """
         plan = _make_plan(path, options)
-        matches = _inspection_matches(plan, options)
+        matches = _inspection_matches(
+            plan, options, prefer_total_time=path.suffix.casefold() == ".csv"
+        )
         format_name = "csv" if path.suffix.casefold() == ".csv" else "txt"
         return InspectionResult(
             format=format_name,
@@ -1029,7 +1065,9 @@ class DelimitedReader:
         scientific conversion without depending on generic text decoding.
         """
         plan = _make_plan(path, options)
-        matches = _inspection_matches(plan, options)
+        matches = _inspection_matches(
+            plan, options, prefer_total_time=path.suffix.casefold() == ".csv"
+        )
         return self._iter_table(
             plan,
             options,

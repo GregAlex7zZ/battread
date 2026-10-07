@@ -51,9 +51,12 @@ with `python -m pip install jupyterlab` and choose the same Python environment.
 | Bio-Logic MPR | Yes, bounded binary reads for supported layouts |
 | Neware NDA/NDAX | Experimental; split NDAX retains timestamp metadata |
 
-[Reader guides](docs/readers/index.md) describe format limits. The verified
-Neware CSV profile uses **Total Time**, converting clock strings into elapsed
-seconds rather than using resetting step time.
+[Reader guides](docs/readers/index.md) describe format limits. In any CSV with
+both **Time** and **Total Time**, the library selects **Total Time**. Matching
+ignores case, surrounding whitespace and normalized separators. Declared time
+units are respected; a bare paired `Total Time` means seconds. Clock strings
+are converted to elapsed seconds, starting at zero. Duplicate total clocks and
+other ambiguities require an explicit mapping; `inspect()` explains each choice.
 
 ## Large files
 

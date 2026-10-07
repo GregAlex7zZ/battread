@@ -42,3 +42,4 @@ nav:
       - Bio-Logic dq decision: adr/0003-biologic-dq-preference.md
       - Neware records decision: adr/0004-neware-strict-records.md
       - Typed pandas decision: adr/0005-typed-pandas-boundary.md
+      - CSV total-clock decision: adr/0009-csv-total-time-preference.md

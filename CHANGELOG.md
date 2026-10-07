@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2 (Unreleased)
+
+- Prefer Total Time over Time in all CSVs, with normalized labels and declared units.
+- Explain the preference in inspect(); preserve explicit overrides and remaining ambiguities.
+
+## 0.1.1
+
+- Recognize Neware measurement CSV exports with missing or unnamed `Step Type`;
+  select `Total Time`, retaining generic and duplicate-clock ambiguity checks.
+
 ## Unreleased
 
 - Simplify public documentation and add an output-free introductory notebook
